@@ -154,7 +154,7 @@ Consumer.prototype._processMessage = function (message, cb) {
       try {
         consumer.handleMessage(message, done);
       } catch (err) {
-        done(new Error('Unexpected message handler failure: ' + err.message));
+        done(new Error('Unexpected message handler failure: ' + err.stack));
       }
     },
     function deleteMessage(done) {
@@ -194,7 +194,7 @@ Consumer.prototype._deleteMessage = function (message, cb) {
 
   debug('Deleting message %s', message.MessageId);
   this.sqs.deleteMessage(deleteParams, function (err) {
-    if (err) return cb(new SQSError('SQS delete message failed: ' + err.message));
+    if (err) return cb(new SQSError('SQS delete message failed: ' + err.stack));
 
     cb();
   });
